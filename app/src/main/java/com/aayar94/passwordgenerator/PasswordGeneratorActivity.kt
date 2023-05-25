@@ -1,6 +1,9 @@
 package com.aayar94.passwordgenerator
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -29,11 +32,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
+import com.aayar94.passwordgenerator.model.password.PasswordGenerator
+import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 
 class PasswordGeneratorActivity : ComponentActivity() {
@@ -48,13 +55,14 @@ class PasswordGeneratorActivity : ComponentActivity() {
 
 @Composable
 fun PasswordGenerator() {
-    val generatedPassword: String by remember { mutableStateOf("") }
+    var generatedPassword: String by remember { mutableStateOf("") }
     var passwordSize: String by remember { mutableStateOf("8") }
-    var customPasswordSetting by remember { mutableStateOf("@{}") }
+    var customPasswordSetting by remember { mutableStateOf("?!@,-_&#()[]{}") }
     var isUpper by remember { mutableStateOf(true) }
     var isLower by remember { mutableStateOf(true) }
     var isNumeric by remember { mutableStateOf(false) }
     var isCustom by remember { mutableStateOf(true) }
+    val context = LocalContext.current
     Surface {
         Column(
             modifier = Modifier
@@ -79,7 +87,17 @@ fun PasswordGenerator() {
                     )
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            val clipboardManager =
+                                getSystemService(
+                                    context,
+                                    ClipboardManager::class.java
+                                ) as ClipboardManager
+                            val clipData = ClipData.newPlainText("text", generatedPassword)
+                            clipboardManager.setPrimaryClip(clipData)
+
+                            Toast.makeText(context, "Password Copied", Toast.LENGTH_LONG).show()
+                        },
                         enabled = generatedPassword.isNotEmpty(), shape = RoundedCornerShape(5.dp)
                     ) {
                         Text(stringResource(id = R.string.copy))
@@ -125,7 +143,7 @@ fun PasswordGenerator() {
                 PasswordSize(
                     passwordSize = passwordSize,
                     onValueChange = {
-                        if (passwordSize.isNotEmpty() && passwordSize.toInt() < 200) {
+                        if ((passwordSize.isNotEmpty() && passwordSize.toInt() < 200) || it.isEmpty()) {
                             passwordSize = it
                         }
                     }
@@ -133,7 +151,17 @@ fun PasswordGenerator() {
 
                 Button(
                     shape = RoundedCornerShape(5.dp),
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        val pwdGenerator = PasswordGenerator.Builder()
+                            .addUpper(isUpper)
+                            .addLower(isLower)
+                            .addNumeric(isNumeric)
+                            .addCustom(isCustom, CustomPwdContent(customPasswordSetting))
+                            .setSize(if (passwordSize.isEmpty()) 8 else passwordSize.toInt())
+                            .build()
+
+                        generatedPassword = pwdGenerator.generatePassword()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && passwordSize.toInt() > 0
                 ) {
@@ -181,7 +209,7 @@ fun EditableCheckbox(
     value: String,
     onCheckChange: () -> Unit,
     onValueChanged: (String) -> Unit,
-    isChecked: Boolean
+    isChecked: Boolean,
 ) {
     Row(
         modifier = Modifier
