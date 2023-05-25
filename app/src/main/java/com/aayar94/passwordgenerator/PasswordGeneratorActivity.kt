@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,10 +43,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.getSystemService
 import com.aayar94.passwordgenerator.model.password.PasswordGenerator
 import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
-import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
+import com.aayar94.passwordgenerator.ui.theme.AppTheme
 
 class PasswordGeneratorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +69,9 @@ fun PasswordGenerator() {
     var isNumeric by remember { mutableStateOf(false) }
     var isCustom by remember { mutableStateOf(true) }
     val context = LocalContext.current
-    Surface {
+    Surface(
+        modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,7 +94,8 @@ fun PasswordGenerator() {
                 ) {
                     Text(
                         text = generatedPassword.ifEmpty { stringResource(id = R.string.click_on_generate) },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        fontSize = 16.sp
                     )
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(
@@ -219,6 +224,7 @@ fun LabeledCheckbox(label: String, onCheckChange: () -> Unit, isChecked: Boolean
             .padding(vertical = 5.dp)
     ) {
         Checkbox(checked = isChecked, onCheckedChange = null)
+        Spacer(modifier = Modifier.width(12.dp))
         Text(text = label)
     }
 }
@@ -241,6 +247,7 @@ fun EditableCheckBox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(checked = isChecked, onCheckedChange = null)
+        Spacer(modifier = Modifier.width(12.dp))
         TextField(value = value, onValueChange = onValueChange)
     }
 }
@@ -248,7 +255,7 @@ fun EditableCheckBox(
 @Preview(device = Devices.PIXEL_4_XL)
 @Composable
 fun PasswordGeneratorPreview() {
-    PasswordGeneratorTheme {
+    AppTheme {
         PasswordGenerator()
     }
 }
