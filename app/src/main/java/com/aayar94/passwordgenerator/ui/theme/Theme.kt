@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.aayar94.passwordgenerator.model.password.PasswordGenerator
 
 
 private val LightColorScheme = lightColorScheme(
@@ -82,7 +83,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun AppTheme(
+fun PasswordGeneratorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
