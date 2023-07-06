@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,10 +45,23 @@ import com.aayar94.passwordgenerator.component.LabeledCheckbox
 import com.aayar94.passwordgenerator.component.PasswordSizer
 import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun PasswordGeneratorScreen() {
     PasswordGeneratorTheme {
+        val systemUiController = rememberSystemUiController()
+        if (isSystemInDarkTheme()) {
+            systemUiController.setSystemBarsColor(
+                color = Color.Transparent
+            )
+            systemUiController.setNavigationBarColor(color = Color.Transparent)
+        } else {
+            systemUiController.setSystemBarsColor(
+                color = MaterialTheme.colorScheme.secondaryContainer
+            )
+            systemUiController.setNavigationBarColor(color = MaterialTheme.colorScheme.secondaryContainer)
+        }
         PasswordGeneratorUI()
     }
 }
@@ -73,7 +89,8 @@ fun PasswordGeneratorUI() {
             Text(
                 stringResource(id = R.string.generate_a_password),
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(24.dp))
             Column(
@@ -86,20 +103,19 @@ fun PasswordGeneratorUI() {
                     Text(
                         text = generatedPassword.ifEmpty { stringResource(id = R.string.click_on_generate) },
                         modifier = Modifier.weight(1f),
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Spacer(modifier = Modifier.width(5.dp))
-                    FilledTonalButton(
+                    Button(
                         onClick = {
                             val clipboardManager = ContextCompat.getSystemService(
-                                context,
-                                ClipboardManager::class.java
+                                context, ClipboardManager::class.java
                             ) as ClipboardManager
                             val clipData = ClipData.newPlainText("text", generatedPassword)
                             clipboardManager.setPrimaryClip(clipData)
 
-                            Toast.makeText(context, "Password Copied", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(context, "Password Copied", Toast.LENGTH_SHORT).show()
                         },
                         enabled = generatedPassword.isNotEmpty(),
                         shape = RoundedCornerShape(15.dp),
@@ -111,65 +127,48 @@ fun PasswordGeneratorUI() {
                                 id = R.string.copy
                             )
                         )
-                        Text(stringResource(id = R.string.copy))
+                        Text(stringResource(id = R.string.copy),color = MaterialTheme.colorScheme.onBackground)
                     }
                 }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
             LabeledCheckbox(
-                label = stringResource(id = R.string.upper_case),
-                onCheckChange = {
+                label = stringResource(id = R.string.upper_case), onCheckChange = {
                     isUpper = !isUpper
-                },
-                isChecked = isUpper
+                }, isChecked = isUpper
             )
             LabeledCheckbox(
-                label = stringResource(id = R.string.lower_case),
-                onCheckChange = {
+                label = stringResource(id = R.string.lower_case), onCheckChange = {
                     isLower = !isLower
-                },
-                isChecked = isLower
+                }, isChecked = isLower
             )
             LabeledCheckbox(
-                label = stringResource(id = R.string.numeric),
-                onCheckChange = {
+                label = stringResource(id = R.string.numeric), onCheckChange = {
                     isNumeric = !isNumeric
-                },
-                isChecked = isNumeric
+                }, isChecked = isNumeric
             )
-            EditableCheckBox(
-                value = customPasswordSetting,
-                onCheckChange = {
-                    if (customPasswordSetting.isNotEmpty())
-                        isCustom = !isCustom
-                },
-                isChecked = isCustom,
-                onValueChange = {
-                    if (it.isEmpty()) {
-                        isCustom = false
-                    }
-                    customPasswordSetting = it
+            EditableCheckBox(value = customPasswordSetting, onCheckChange = {
+                if (customPasswordSetting.isNotEmpty()) isCustom = !isCustom
+            }, isChecked = isCustom, onValueChange = {
+                if (it.isEmpty()) {
+                    isCustom = false
                 }
-            )
+                customPasswordSetting = it
+            })
 
-            PasswordSizer(
-                passwordSize = passwordSize,
-                onValueChange = {
-                    if ((it.isNotEmpty() && it.toInt() < 200) || it.isEmpty()) {
-                        passwordSize = it
-                    }
+            PasswordSizer(passwordSize = passwordSize, onValueChange = {
+                if ((it.isNotEmpty() && it.toInt() < 200) || it.isEmpty()) {
+                    passwordSize = it
                 }
-            )
+            })
             Spacer(modifier = Modifier.height(10.dp))
-            FilledTonalButton(
+            ElevatedButton(
                 shape = RoundedCornerShape(15.dp),
                 onClick = {
                     val pwdGen =
                         com.aayar94.passwordgenerator.model.password.PasswordGenerator.Builder()
-                            .addUpper(isUpper)
-                            .addLower(isLower)
-                            .addNumeric(isNumeric)
+                            .addUpper(isUpper).addLower(isLower).addNumeric(isNumeric)
                             .addCustom(isCustom, CustomPwdContent(customPasswordSetting))
                             .setSize(if (passwordSize.isEmpty()) 8 else passwordSize.toInt())
                             .build()
@@ -180,16 +179,17 @@ fun PasswordGeneratorUI() {
                 modifier = Modifier.fillMaxWidth(),
                 enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && passwordSize.toInt() > 0
             ) {
-                Text(text = stringResource(id = R.string.generate))
+                Text(text = stringResource(id = R.string.generate),color = MaterialTheme.colorScheme.onBackground)
             }
             Button(
-                onClick = { /*TODO*/ }, modifier = Modifier
+                onClick = { /*TODO*/ },
+                modifier = Modifier
                     .align(CenterHorizontally)
                     .padding(top = 8.dp)
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Saved Passwords")
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "Saved Passwords")
+                Text(text = "Saved Passwords",color = MaterialTheme.colorScheme.onBackground)
             }
         }
     }
