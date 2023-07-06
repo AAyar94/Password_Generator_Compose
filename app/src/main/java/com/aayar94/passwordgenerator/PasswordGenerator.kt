@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,10 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -58,14 +60,15 @@ fun PasswordGeneratorUI() {
     var isNumeric by remember { mutableStateOf(false) }
     var isCustom by remember { mutableStateOf(true) }
     val context = LocalContext.current
-    Surface(
+
+    Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .fillMaxHeight()
             .background(MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 60.dp),
         ) {
             Text(
                 stringResource(id = R.string.generate_a_password),
@@ -95,12 +98,13 @@ fun PasswordGeneratorUI() {
                             val clipData = ClipData.newPlainText("text", generatedPassword)
                             clipboardManager.setPrimaryClip(clipData)
 
-                            Toast.makeText(context, "Password Copied", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Password Copied", Toast.LENGTH_SHORT)
+                                .show()
                         },
                         enabled = generatedPassword.isNotEmpty(),
                         shape = RoundedCornerShape(15.dp),
 
-                    ) {
+                        ) {
                         Icon(
                             imageVector = Icons.Default.ContentCopy,
                             contentDescription = stringResource(
@@ -178,7 +182,15 @@ fun PasswordGeneratorUI() {
             ) {
                 Text(text = stringResource(id = R.string.generate))
             }
-
+            Button(
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(top = 8.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Save, contentDescription = "Saved Passwords")
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "Saved Passwords")
+            }
         }
     }
 }
