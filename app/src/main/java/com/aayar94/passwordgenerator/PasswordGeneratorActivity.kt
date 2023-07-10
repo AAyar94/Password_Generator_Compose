@@ -7,13 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import com.aayar94.passwordgenerator.ui.navigation.PasswordGeneratorNavigation
+import com.aayar94.passwordgenerator.ui.screens.PasswordGeneratorScreen
 
 class PasswordGeneratorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            PasswordGeneratorScreen()
+            PasswordGeneratorNavigation()
         }
     }
 }
@@ -22,5 +24,5 @@ class PasswordGeneratorActivity : ComponentActivity() {
 @Preview(uiMode = UI_MODE_NIGHT_YES,device = Devices.PIXEL_4_XL)
 @Composable
 fun AppPreview(){
-    PasswordGeneratorScreen()
+    PasswordGeneratorNavigation()
 }

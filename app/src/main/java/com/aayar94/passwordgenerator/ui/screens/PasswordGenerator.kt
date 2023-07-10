@@ -1,4 +1,4 @@
-package com.aayar94.passwordgenerator
+package com.aayar94.passwordgenerator.ui.screens
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,15 +39,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.component.EditableCheckBox
 import com.aayar94.passwordgenerator.component.LabeledCheckbox
 import com.aayar94.passwordgenerator.component.PasswordSizer
 import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
+import com.aayar94.passwordgenerator.ui.navigation.PasswordGeneratorScreens
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun PasswordGeneratorScreen() {
+fun PasswordGeneratorScreen(
+    navController: NavController,
+) {
     PasswordGeneratorTheme {
         val systemUiController = rememberSystemUiController()
         if (isSystemInDarkTheme()) {
@@ -62,12 +67,12 @@ fun PasswordGeneratorScreen() {
             )
             systemUiController.setNavigationBarColor(color = MaterialTheme.colorScheme.secondaryContainer)
         }
-        PasswordGeneratorUI()
+        PasswordGeneratorUI(navController)
     }
 }
 
 @Composable
-fun PasswordGeneratorUI() {
+fun PasswordGeneratorUI(navController: NavController) {
     var generatedPassword: String by remember { mutableStateOf("") }
     var passwordSize: String by remember { mutableStateOf("8") }
     var customPasswordSetting by remember { mutableStateOf("?!@,-_&#()[]{}") }
@@ -127,7 +132,10 @@ fun PasswordGeneratorUI() {
                                 id = R.string.copy
                             )
                         )
-                        Text(stringResource(id = R.string.copy),color = MaterialTheme.colorScheme.onBackground)
+                        Text(
+                            stringResource(id = R.string.copy),
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
                     }
                 }
             }
@@ -179,17 +187,20 @@ fun PasswordGeneratorUI() {
                 modifier = Modifier.fillMaxWidth(),
                 enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && passwordSize.toInt() > 0
             ) {
-                Text(text = stringResource(id = R.string.generate),color = MaterialTheme.colorScheme.onBackground)
+                Text(
+                    text = stringResource(id = R.string.generate),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(PasswordGeneratorScreens.SavedPasswordsScreen.name) },
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .padding(top = 8.dp)
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Saved Passwords")
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "Saved Passwords",color = MaterialTheme.colorScheme.onBackground)
+                Text(text = "Saved Passwords", color = MaterialTheme.colorScheme.onBackground)
             }
         }
     }
@@ -199,5 +210,5 @@ fun PasswordGeneratorUI() {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun PasswordGeneratorPreview() {
-    PasswordGeneratorScreen()
+    PasswordGeneratorScreen(rememberNavController())
 }
