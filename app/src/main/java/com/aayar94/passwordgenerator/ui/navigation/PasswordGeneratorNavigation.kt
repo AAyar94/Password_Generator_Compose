@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aayar94.passwordgenerator.ui.screens.PasswordGeneratorScreen
+import com.aayar94.passwordgenerator.ui.screens.SavedPasswordsScreen
 
 @Composable
 fun PasswordGeneratorNavigation() {
@@ -18,7 +19,7 @@ fun PasswordGeneratorNavigation() {
                 PasswordGeneratorScreen(navController = navController)
             }
             composable(PasswordGeneratorScreens.SavedPasswordsScreen.name){
-
+                SavedPasswordsScreen()
             }
 
         })
