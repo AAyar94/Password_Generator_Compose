@@ -1,55 +1,74 @@
 package com.aayar94.passwordgenerator.ui.screens
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.unit.sp
 import com.aayar94.passwordgenerator.component.RowLayoutSavedPassword
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 
-
 @Composable
-fun SavedPasswordsScreen(navController: NavController, passwordList: List<SavedPasswordModel>) {
+fun SavedPasswordsScreen() {
+    val passwordList: List<SavedPasswordModel> = emptyList()
     PasswordGeneratorTheme {
-        TODO("add function fetch password list from db")
-        SavedPasswordScreenContent(passwordList)
+        SavedPasswordsContent(passwordList)
     }
 }
 
 @Composable
-fun SavedPasswordScreenContent(
-    passwordList: List<SavedPasswordModel>,
-) {
-    LazyColumn(
-        contentPadding = PaddingValues(all = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+fun SavedPasswordsContent(list: List<SavedPasswordModel>) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        items(
-            items = passwordList,
-            key = { password ->
-                password.password.toString()
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = "Saved Passwords",
+                fontSize = 36.sp,
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(top = 16.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().background(Color.Transparent),
+                contentPadding = PaddingValues(12.dp),
+            ) {
+                items(list) { password ->
+                    RowLayoutSavedPassword(password = password)
+                }
             }
-        ) { password ->
-            RowLayoutSavedPassword(password = password)
         }
     }
 }
 
-@Preview(showSystemUi = true, device = Devices.PIXEL_4_XL)
-@Preview(showSystemUi = true, device = Devices.PIXEL_4_XL, uiMode = UI_MODE_NIGHT_YES)
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun SavedPasswordScreenPreview() {
-    val mockList = mutableListOf<SavedPasswordModel>()
-    repeat(10) {
-        mockList.add(SavedPasswordModel("skjdhaskldja", "dljsahdla"))
-    }
-    SavedPasswordsScreen(rememberNavController(), mockList)
+fun SavedPasswordsPreview() {
+    val list = mutableListOf<SavedPasswordModel>()
+    list.add(SavedPasswordModel(1, "asd", "bsd"))
+    list.add(SavedPasswordModel(1, "asd", "bsd"))
+    list.add(SavedPasswordModel(1, "asd", "bsd"))
+    SavedPasswordsContent(list)
 }
