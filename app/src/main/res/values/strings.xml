@@ -7,5 +7,5 @@
     <string name="numeric">Numeric</string>
     <string name="click_on_generate">Click on generate</string>
     <string name="password_size">Password Size</string>
-    <string name="generate_a_password">Generate a password</string>
+    <string name="generate_a_password">Generate a strong password</string>
 </resources>
