@@ -60,6 +60,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun PasswordGeneratorScreen(
     navController: NavController,
 ) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
+    systemUiController.statusBarDarkContentEnabled = !isSystemInDarkTheme()
     PasswordGeneratorTheme {
         PasswordGeneratorUI(navController)
     }
