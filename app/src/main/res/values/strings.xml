@@ -8,4 +8,6 @@
     <string name="click_on_generate">Click on generate</string>
     <string name="password_size">Password Size</string>
     <string name="generate_a_password">Generate a strong password</string>
+    <string name="saved_password_list">Saved Password List</string>
+    <string name="save_password">Save Password</string>
 </resources>
