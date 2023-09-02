@@ -1,4 +1,4 @@
-package com.aayar94.passwordgenerator
+package com.aayar94.passwordgenerator.ui.screens
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -8,8 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.aayar94.passwordgenerator.ui.navigation.PasswordGeneratorNavigation
-import com.aayar94.passwordgenerator.ui.screens.PasswordGeneratorScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PasswordGeneratorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,11 +1,11 @@
-package com.aayar94.passwordgenerator.model.db
+package com.aayar94.passwordgenerator.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.aayar94.passwordgenerator.common.Constant.Companion.PASSWORDS_TABLE_NAME
+import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 
 @Dao
 interface SavedPasswordsDao {

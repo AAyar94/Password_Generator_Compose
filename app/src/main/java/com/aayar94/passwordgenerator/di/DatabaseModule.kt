@@ -3,8 +3,8 @@ package com.aayar94.passwordgenerator.di
 import android.content.Context
 import androidx.room.Room
 import com.aayar94.passwordgenerator.common.Constant.Companion.DATABASE_NAME
-import com.aayar94.passwordgenerator.model.db.SavedPasswordsDao
-import com.aayar94.passwordgenerator.model.db.SavedPasswordsDatabase
+import com.aayar94.passwordgenerator.data.SavedPasswordsDao
+import com.aayar94.passwordgenerator.data.SavedPasswordsDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object DatabaseModule {
     @Provides
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): SavedPasswordsDatabase{
+    ): SavedPasswordsDatabase {
         return Room.databaseBuilder(
             context,
             SavedPasswordsDatabase::class.java,
@@ -30,7 +30,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideSavedPasswordsDao(database: SavedPasswordsDatabase) : SavedPasswordsDao{
+    fun provideSavedPasswordsDao(database: SavedPasswordsDatabase) : SavedPasswordsDao {
         return database.savedPasswordsDao()
     }
 

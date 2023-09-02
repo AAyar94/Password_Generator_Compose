@@ -1,4 +1,4 @@
-package com.aayar94.passwordgenerator.ui.screens
+package com.aayar94.passwordgenerator.ui.screens.password_generator
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -18,17 +18,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.GeneratingTokens
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -201,7 +198,9 @@ fun PasswordGeneratorUI(navController: NavController) {
             )
         }
         FilledTonalButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                /* TODO*/
+            },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .fillMaxWidth(),
@@ -213,7 +212,10 @@ fun PasswordGeneratorUI(navController: NavController) {
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Spacer(modifier = Modifier.width(12.dp))
-            Text(text = "Save Password", color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Text(
+                text = stringResource(R.string.save_password),
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         }
         FilledTonalButton(
             onClick = { navController.navigate(PasswordGeneratorScreens.SavedPasswordsScreen.name) },
@@ -229,7 +231,7 @@ fun PasswordGeneratorUI(navController: NavController) {
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Saved Password List",
+                text = stringResource(R.string.saved_password_list),
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
