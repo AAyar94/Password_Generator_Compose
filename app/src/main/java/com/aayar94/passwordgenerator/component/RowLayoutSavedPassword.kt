@@ -21,14 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 
 @Composable
 fun RowLayoutSavedPassword(
     password: SavedPasswordModel,
+    deleteButtonOnClick: () -> Unit
 ) {
 
     Card(
@@ -50,13 +53,13 @@ fun RowLayoutSavedPassword(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = password.tag.toString(), fontSize = 13.sp)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { deleteButtonOnClick }) {
                 Icon(
                     modifier = Modifier
                         .height(24.dp)
                         .width(24.dp),
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.delete_button),
                     tint = Color.Red
                 )
             }
@@ -70,5 +73,5 @@ fun RowLayoutSavedPassword(
 @Composable
 fun SavedPasswordPreview() {
     val mockData = SavedPasswordModel(0, "asdfgh", "tag1")
-    RowLayoutSavedPassword(password = mockData)
+    RowLayoutSavedPassword(password = mockData) {   /* TODO */ }
 }

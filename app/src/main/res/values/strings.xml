@@ -10,4 +10,9 @@
     <string name="generate_a_password">Generate a strong password</string>
     <string name="saved_password_list">Saved Password List</string>
     <string name="save_password">Save Password</string>
+    <string name="saved_password_list_button">Saved Password List Button</string>
+    <string name="save_password_button">Save Password Button</string>
+    <string name="generate_button">Generate Button</string>
+    <string name="selected_size_min_8_max_16">Selected Size : %1$s , Min : 8 , Max: 16</string>
+    <string name="delete_button">Delete Button</string>
 </resources>
