@@ -1,6 +1,5 @@
 package com.aayar94.passwordgenerator.ui.screens.saved_passwords
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,17 +38,24 @@ fun SavedPasswordsScreen(
     navController: NavController,
     viewModel: SavedPasswordsViewModel = hiltViewModel()
 ) {
-    var passwordList : List<SavedPasswordModel>? = emptyList()
+    var passwordList = mutableListOf<SavedPasswordModel>()
     LaunchedEffect(key1 = "key1", block = {
-        passwordList = viewModel.passwordList.value
+        viewModel.getAllPasswords()
+        if (!viewModel.passwordList.value.isNullOrEmpty()) {
+            passwordList = (viewModel.passwordList.value as MutableList<SavedPasswordModel>?)!!
+        }
     })
     PasswordGeneratorTheme {
-        passwordList?.let { SavedPasswordsContent(it) }
+        SavedPasswordsContent(passwordList, Modifier, viewModel)
     }
 }
 
 @Composable
-fun SavedPasswordsContent(list: List<SavedPasswordModel>, modifier: Modifier = Modifier) {
+fun SavedPasswordsContent(
+    list: List<SavedPasswordModel>,
+    modifier: Modifier = Modifier,
+    viewModel: SavedPasswordsViewModel
+) {
     Surface(
         modifier = modifier
             .fillMaxSize()
@@ -103,36 +108,14 @@ fun SavedPasswordsContent(list: List<SavedPasswordModel>, modifier: Modifier = M
                         contentPadding = PaddingValues(12.dp),
                     ) {
                         items(list) { password ->
-                            RowLayoutSavedPassword(password = password)
+                            RowLayoutSavedPassword(password = password) {
+                                viewModel.deletePassword(password)
+                            }
                         }
                     }
                 }
             }
         }
-    }
-}
-
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun SavedPasswordsPreviewListNotEmpty() {
-    PasswordGeneratorTheme {
-        val list = mutableListOf<SavedPasswordModel>()
-        list.add(SavedPasswordModel(1, "asd", "bsd"))
-        list.add(SavedPasswordModel(1, "asd", "bsd"))
-        list.add(SavedPasswordModel(1, "asd", "bsd"))
-        SavedPasswordsContent(list)
-    }
-}
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun SavedPasswordsPreviewListEmpty() {
-    PasswordGeneratorTheme {
-        val list = emptyList<SavedPasswordModel>()
-        SavedPasswordsContent(list)
     }
 }
 

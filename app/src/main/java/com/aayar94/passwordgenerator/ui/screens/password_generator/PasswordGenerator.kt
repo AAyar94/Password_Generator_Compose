@@ -1,5 +1,6 @@
 package com.aayar94.passwordgenerator.ui.screens.password_generator
 
+import PasswordSizerSlider
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.GeneratingTokens
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -29,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,12 +44,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.component.EditableCheckBox
 import com.aayar94.passwordgenerator.component.LabeledCheckbox
-import com.aayar94.passwordgenerator.component.PasswordSizer
+import com.aayar94.passwordgenerator.component.PasswordSaveAlertDialog
+import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import com.aayar94.passwordgenerator.model.password.PasswordGenerator
 import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
 import com.aayar94.passwordgenerator.ui.navigation.PasswordGeneratorScreens
@@ -56,26 +61,33 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun PasswordGeneratorScreen(
     navController: NavController,
+    viewModel: PasswordGeneratorViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = "key01", block = {
+        for (i in 0..4) {
+            viewModel.savePassword("password$1","tag$1")
+        }
+    })
+
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
     systemUiController.statusBarDarkContentEnabled = !isSystemInDarkTheme()
     PasswordGeneratorTheme {
-        PasswordGeneratorUI(navController)
+        PasswordGeneratorUI(navController, viewModel)
     }
 }
 
 @Composable
-fun PasswordGeneratorUI(navController: NavController) {
+fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGeneratorViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
     var generatedPassword: String by remember { mutableStateOf("") }
-    var passwordSize: String by remember { mutableStateOf("8") }
+    var passwordSize: String by remember { mutableStateOf("12") }
     var customPasswordSetting by remember { mutableStateOf("?!@,-_&#()[]{}") }
     var isUpper by remember { mutableStateOf(true) }
     var isLower by remember { mutableStateOf(true) }
     var isNumeric by remember { mutableStateOf(false) }
     var isCustom by remember { mutableStateOf(true) }
     val context = LocalContext.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -161,12 +173,26 @@ fun PasswordGeneratorUI(navController: NavController) {
             }
             customPasswordSetting = it
         })
-
-        PasswordSizer(passwordSize = passwordSize, onValueChange = {
-            if ((it.isNotEmpty() && it.toInt() < 200) || it.isEmpty()) {
-                passwordSize = it
+        PasswordSizerSlider(passwordSize = passwordSize.toFloat(), onValueChange = {
+            if ((it.toString().isNotEmpty() && it.toInt() < 16) || it.toString().isEmpty()) {
+                passwordSize = it.toString()
             }
         })
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = {
+                    showDialog = false // Dismiss the custom AlertDialog
+                },
+                text = {
+                    PasswordSaveAlertDialog(
+                        generatedPassword,
+                        viewModel,
+                        onDismissClicked = { showDialog = false })
+                },
+                confirmButton = {},
+                dismissButton = {},
+            )
+        }
         Spacer(modifier = Modifier.height(10.dp))
         ElevatedButton(
             shape = RoundedCornerShape(15.dp),
@@ -183,12 +209,12 @@ fun PasswordGeneratorUI(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth(),
-            enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && passwordSize.toInt() > 0,
+            enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && (passwordSize.toFloat().toInt() > 0),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Icon(
                 imageVector = Icons.Default.GeneratingTokens,
-                contentDescription = "Generate Button",
+                contentDescription = stringResource(R.string.generate_button),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -199,16 +225,17 @@ fun PasswordGeneratorUI(navController: NavController) {
         }
         FilledTonalButton(
             onClick = {
-                /* TODO*/
+                showDialog = true
             },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .fillMaxWidth(),
+            enabled = generatedPassword.isNotEmpty(),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Icon(
                 imageVector = Icons.Default.Save,
-                contentDescription = "Save Password Button",
+                contentDescription = stringResource(R.string.save_password_button),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -226,7 +253,7 @@ fun PasswordGeneratorUI(navController: NavController) {
         ) {
             Icon(
                 imageVector = Icons.Default.List,
-                contentDescription = "Saved Password List Button",
+                contentDescription = stringResource(R.string.saved_password_list_button),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Spacer(modifier = Modifier.width(12.dp))

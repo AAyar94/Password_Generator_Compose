@@ -1,11 +1,13 @@
 package com.aayar94.passwordgenerator.ui.screens.saved_passwords
 
-import android.app.assist.AssistStructure.ViewNode
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aayar94.passwordgenerator.data.Repository
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,8 +18,10 @@ class SavedPasswordsViewModel @Inject constructor(
     val passwordList = MutableLiveData<List<SavedPasswordModel>>()
 
     fun getAllPasswords() {
-        val response = repository.getAllSavedPasswords()
-        passwordList.postValue(response)
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.getAllSavedPasswords()
+            passwordList.postValue(response.toMutableList())
+        }
     }
 
     fun deletePassword(savedPasswordModel: SavedPasswordModel) {

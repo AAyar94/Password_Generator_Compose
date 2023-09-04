@@ -1,6 +1,5 @@
 package com.aayar94.passwordgenerator.component
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,14 +30,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aayar94.passwordgenerator.ui.screens.password_generator.PasswordGeneratorViewModel
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordSaveAlertDialog(passwordText: String) {
+fun PasswordSaveAlertDialog(
+    passwordText: String,
+    viewModel: PasswordGeneratorViewModel,
+    onDismissClicked: () -> Unit
+) {
     var passwordTag: String = ""
     PasswordGeneratorTheme {
         Box(
@@ -87,7 +90,7 @@ fun PasswordSaveAlertDialog(passwordText: String) {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         FilledTonalButton(
-                            onClick = { /*TODO*/ },
+                            onClick = { onDismissClicked },
                             shape = ButtonDefaults.filledTonalShape,
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
                         ) {
@@ -106,7 +109,7 @@ fun PasswordSaveAlertDialog(passwordText: String) {
                         }
                         Spacer(modifier = Modifier.width(12.dp))
                         FilledTonalButton(
-                            onClick = { /*TODO*/ },
+                            onClick = { viewModel.savePassword(passwordText, passwordTag) },
                             shape = ButtonDefaults.filledTonalShape,
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -128,11 +131,4 @@ fun PasswordSaveAlertDialog(passwordText: String) {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun PasswordSaveAlertDialogPreview() {
-    PasswordSaveAlertDialog("asdfghjk")
 }
