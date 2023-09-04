@@ -51,7 +51,6 @@ import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.component.EditableCheckBox
 import com.aayar94.passwordgenerator.component.LabeledCheckbox
 import com.aayar94.passwordgenerator.component.PasswordSaveAlertDialog
-import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import com.aayar94.passwordgenerator.model.password.PasswordGenerator
 import com.aayar94.passwordgenerator.model.password.content.CustomPwdContent
 import com.aayar94.passwordgenerator.ui.navigation.PasswordGeneratorScreens
@@ -65,7 +64,7 @@ fun PasswordGeneratorScreen(
 ) {
     LaunchedEffect(key1 = "key01", block = {
         for (i in 0..4) {
-            viewModel.savePassword("password$1","tag$1")
+            viewModel.savePassword("password$1", "tag$1")
         }
     })
 
@@ -173,11 +172,11 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
             }
             customPasswordSetting = it
         })
-        PasswordSizerSlider(passwordSize = passwordSize.toFloat(), onValueChange = {
+        PasswordSizerSlider(passwordSize = passwordSize.toFloat()) {
             if ((it.toString().isNotEmpty() && it.toInt() < 16) || it.toString().isEmpty()) {
                 passwordSize = it.toString()
             }
-        })
+        }
         if (showDialog) {
             AlertDialog(
                 onDismissRequest = {
@@ -201,15 +200,21 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
                     PasswordGenerator.Builder()
                         .addUpper(isUpper).addLower(isLower).addNumeric(isNumeric)
                         .addCustom(isCustom, CustomPwdContent(customPasswordSetting))
-                        .setSize(if (passwordSize.isEmpty()) 8 else passwordSize.toInt())
+                        .setSize(
+                            if (passwordSize.isEmpty()) {
+                                12
+                            } else {
+                                passwordSize.toFloat().toInt()
+                            }
+                        )
                         .build()
 
                 generatedPassword = pwdGen.generatePassword()
-
             },
             modifier = Modifier
                 .fillMaxWidth(),
-            enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && (passwordSize.toFloat().toInt() > 0),
+            enabled = (isUpper || isLower || isCustom || isNumeric) && passwordSize.isNotEmpty() && (passwordSize.toFloat()
+                .toInt() > 0),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Icon(
