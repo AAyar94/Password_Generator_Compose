@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Save
@@ -26,105 +28,125 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.ui.screens.password_generator.PasswordGeneratorViewModel
-import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordSaveAlertDialog(
     passwordText: String,
-    viewModel: PasswordGeneratorViewModel,
+    viewModel: PasswordGeneratorViewModel = hiltViewModel(),
     onDismissClicked: () -> Unit
 ) {
-    var passwordTag: String = ""
-    PasswordGeneratorTheme {
-        Box(
+    var passwordTag by remember {
+        mutableStateOf("")
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Transparent)
+    ) {
+        Card(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxWidth(1f)
+                .padding(horizontal = 12.dp)
+                .align(Alignment.Center),
+            shape = RoundedCornerShape(14.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         ) {
-            Card(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .align(Alignment.Center),
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                    .fillMaxWidth(),
+                horizontalAlignment = CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = CenterHorizontally
+                Text(
+                    text = stringResource(R.string.save_a_password),
+                    modifier = Modifier
+                        .padding(top = 24.dp),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = passwordText,
+                    onValueChange = {},
+                    readOnly = true,
+                    modifier = Modifier.fillMaxWidth(0.8f),
+                    shape = TextFieldDefaults.outlinedShape,
+                    label = { Text(text = stringResource(R.string.password)) }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = passwordTag,
+                    onValueChange = { passwordTag = it },
+                    shape = TextFieldDefaults.outlinedShape,
+                    modifier = Modifier.fillMaxWidth(0.8f),
+                    placeholder = { Text(text = stringResource(R.string.enter_a_password_tag)) },
+                    keyboardActions = KeyboardActions.Default,
+                    keyboardOptions = KeyboardOptions.Default, readOnly = false,
+                    label = { Text(text = stringResource(R.string.password_tag)) }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        text = "Save a password",
-                        modifier = Modifier
-                            .padding(top = 24.dp),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    OutlinedTextField(
-                        value = passwordText,
-                        onValueChange = {},
-                        readOnly = true,
-                        shape = TextFieldDefaults.outlinedShape,
-                        label = { Text(text = "Password") }
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    OutlinedTextField(
-                        value = passwordTag,
-                        onValueChange = { passwordTag = it },
-                        shape = TextFieldDefaults.outlinedShape,
-                        placeholder = { Text(text = "Enter a password tag") },
-                        label = { Text(text = "Password Tag") }
-                    )
-                    Spacer(modifier = Modifier.height(36.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
+                    FilledTonalButton(
+                        onClick = onDismissClicked,
+                        shape = ButtonDefaults.filledTonalShape,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                        modifier = Modifier.weight(1f)
                     ) {
-                        FilledTonalButton(
-                            onClick = { onDismissClicked },
-                            shape = ButtonDefaults.filledTonalShape,
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
-                        ) {
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Default.Cancel,
-                                    contentDescription = "Cancel Button Icon",
-                                    tint = MaterialTheme.colorScheme.onErrorContainer
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text(
-                                    text = "Cancel",
-                                    color = MaterialTheme.colorScheme.onErrorContainer
-                                )
-                            }
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Icon(
+                                imageVector = Icons.Default.Cancel,
+                                contentDescription = stringResource(R.string.cancel_button_icon),
+                                tint = MaterialTheme.colorScheme.onError
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = stringResource(R.string.cancel),
+                                color = MaterialTheme.colorScheme.onError
+                            )
                         }
-                        Spacer(modifier = Modifier.width(12.dp))
-                        FilledTonalButton(
-                            onClick = { viewModel.savePassword(passwordText, passwordTag) },
-                            shape = ButtonDefaults.filledTonalShape,
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-                        ) {
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Default.Save,
-                                    contentDescription = "Save Button Icon",
-                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text(
-                                    text = "Save",
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            }
+                    }
+                    Spacer(modifier = Modifier.width(12.dp))
+                    FilledTonalButton(
+                        onClick = {
+                            viewModel.savePassword(passwordText, passwordTag)
+                            onDismissClicked()
+                        },
+                        shape = ButtonDefaults.filledTonalShape,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        modifier = Modifier.weight(1F)
+                    ) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Icon(
+                                imageVector = Icons.Default.Save,
+                                contentDescription = stringResource(R.string.save_button_icon),
+                                tint = MaterialTheme.colorScheme.onPrimary
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = stringResource(R.string.save),
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
                         }
                     }
                 }

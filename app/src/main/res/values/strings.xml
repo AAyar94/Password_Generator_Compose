@@ -15,4 +15,12 @@
     <string name="generate_button">Generate Button</string>
     <string name="selected_size_min_8_max_16">Selected Size : %1$s , Min : 8 , Max: 16</string>
     <string name="delete_button">Delete Button</string>
+    <string name="save_a_password">Save a password</string>
+    <string name="enter_a_password_tag">Enter a password tag</string>
+    <string name="password_tag">Password Tag</string>
+    <string name="cancel_button_icon">Cancel Button Icon</string>
+    <string name="save_button_icon">Save Button Icon</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="password">Password</string>
 </resources>

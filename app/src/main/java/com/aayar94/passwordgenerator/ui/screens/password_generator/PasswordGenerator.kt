@@ -22,16 +22,15 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.GeneratingTokens
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +42,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -62,12 +63,6 @@ fun PasswordGeneratorScreen(
     navController: NavController,
     viewModel: PasswordGeneratorViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = "key01", block = {
-        for (i in 0..4) {
-            viewModel.savePassword("password$1", "tag$1")
-        }
-    })
-
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
     systemUiController.statusBarDarkContentEnabled = !isSystemInDarkTheme()
@@ -76,6 +71,7 @@ fun PasswordGeneratorScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGeneratorViewModel) {
     var showDialog by remember { mutableStateOf(false) }
@@ -172,24 +168,30 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
             }
             customPasswordSetting = it
         })
-        PasswordSizerSlider(passwordSize = passwordSize.toFloat(), 8f, 16f) {
+        PasswordSizerSlider(
+            passwordSize = passwordSize.toFloat(),
+            8f,
+            16f,
+            modifier = Modifier.padding(top = 12.dp)
+        ) {
             if ((it.toString().isNotEmpty() && it.toInt() < 17) || it.toString().isEmpty()) {
                 passwordSize = it.toString()
             }
         }
         if (showDialog) {
-            AlertDialog(
+            var passwordTag: String = ""
+            Dialog(
                 onDismissRequest = {
                     showDialog = false // Dismiss the custom AlertDialog
                 },
-                text = {
+                content = {
                     PasswordSaveAlertDialog(
-                        generatedPassword,
+                        passwordText = generatedPassword,
                         viewModel,
-                        onDismissClicked = { showDialog = false })
+                        onDismissClicked = { showDialog = false }
+                    )
                 },
-                confirmButton = {},
-                dismissButton = {},
+                properties = DialogProperties(usePlatformDefaultWidth = false)
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -269,7 +271,6 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
         }
     }
 }
-
 
 @Preview(showSystemUi = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showSystemUi = true)

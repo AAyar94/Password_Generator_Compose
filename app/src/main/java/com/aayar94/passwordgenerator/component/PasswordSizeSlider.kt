@@ -22,10 +22,11 @@ fun PasswordSizerSlider(
     passwordSize: Float,
     bottomLimit: Float,
     topLimit: Float,
-    onValueChange: (Float) -> Unit
+    modifier: Modifier,
+    onValueChange: (Float) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -53,5 +54,11 @@ fun PasswordSizerSlider(
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PasswordSizeSlider() {
-    PasswordSizerSlider(passwordSize = 12F, 8f, 16f, onValueChange = {})
+    PasswordSizerSlider(
+        passwordSize = 12F,
+        8f,
+        16f,
+        modifier=Modifier,
+        onValueChange = {},
+    )
 }

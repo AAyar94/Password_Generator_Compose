@@ -53,7 +53,7 @@ fun RowLayoutSavedPassword(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = password.tag.toString(), fontSize = 13.sp)
             }
-            IconButton(onClick = { deleteButtonOnClick }) {
+            IconButton(onClick = { deleteButtonOnClick() }) {
                 Icon(
                     modifier = Modifier
                         .height(24.dp)

@@ -21,6 +21,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -38,13 +40,7 @@ fun SavedPasswordsScreen(
     navController: NavController,
     viewModel: SavedPasswordsViewModel = hiltViewModel()
 ) {
-    var passwordList = mutableListOf<SavedPasswordModel>()
-    LaunchedEffect(key1 = "key1", block = {
-        viewModel.getAllPasswords()
-        if (!viewModel.passwordList.value.isNullOrEmpty()) {
-            passwordList = (viewModel.passwordList.value as MutableList<SavedPasswordModel>?)!!
-        }
-    })
+    val passwordList by viewModel.passwordList.collectAsState()
     PasswordGeneratorTheme {
         SavedPasswordsContent(passwordList, Modifier, viewModel)
     }
