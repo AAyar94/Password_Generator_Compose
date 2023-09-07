@@ -18,7 +18,12 @@ import com.aayar94.passwordgenerator.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordSizerSlider(passwordSize: Float, onValueChange: (Float) -> Unit) {
+fun PasswordSizerSlider(
+    passwordSize: Float,
+    bottomLimit: Float,
+    topLimit: Float,
+    onValueChange: (Float) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -30,8 +35,8 @@ fun PasswordSizerSlider(passwordSize: Float, onValueChange: (Float) -> Unit) {
         Slider(
             value = passwordSize,
             onValueChange = onValueChange,
-            valueRange = 8f..16f,
-            steps = 1,
+            valueRange = bottomLimit..topLimit,
+            steps = (topLimit-bottomLimit-1).toInt(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -48,5 +53,5 @@ fun PasswordSizerSlider(passwordSize: Float, onValueChange: (Float) -> Unit) {
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PasswordSizeSlider() {
-    PasswordSizerSlider(passwordSize = 12F, onValueChange = {})
+    PasswordSizerSlider(passwordSize = 12F, 8f, 16f, onValueChange = {})
 }

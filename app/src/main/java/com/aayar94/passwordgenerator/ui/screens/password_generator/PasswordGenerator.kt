@@ -172,8 +172,8 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
             }
             customPasswordSetting = it
         })
-        PasswordSizerSlider(passwordSize = passwordSize.toFloat()) {
-            if ((it.toString().isNotEmpty() && it.toInt() < 16) || it.toString().isEmpty()) {
+        PasswordSizerSlider(passwordSize = passwordSize.toFloat(), 8f, 16f) {
+            if ((it.toString().isNotEmpty() && it.toInt() < 17) || it.toString().isEmpty()) {
                 passwordSize = it.toString()
             }
         }
