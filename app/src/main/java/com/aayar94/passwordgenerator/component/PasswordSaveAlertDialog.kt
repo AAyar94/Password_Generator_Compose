@@ -1,5 +1,6 @@
 package com.aayar94.passwordgenerator.component
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -65,7 +67,7 @@ fun PasswordSaveAlertDialog(
                 .padding(horizontal = 12.dp)
                 .align(Alignment.Center),
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(
                 modifier = Modifier
@@ -76,7 +78,7 @@ fun PasswordSaveAlertDialog(
                     text = stringResource(R.string.save_a_password),
                     modifier = Modifier
                         .padding(top = 24.dp),
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
@@ -87,7 +89,7 @@ fun PasswordSaveAlertDialog(
                     readOnly = true,
                     modifier = Modifier.fillMaxWidth(0.8f),
                     shape = TextFieldDefaults.outlinedShape,
-                    label = { Text(text = stringResource(R.string.password)) }
+                    label = { Text(text = stringResource(R.string.password)) },
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 OutlinedTextField(
@@ -153,4 +155,11 @@ fun PasswordSaveAlertDialog(
             }
         }
     }
+}
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun PasswordSaveAlertDialogPreview() {
+    PasswordSaveAlertDialog("password", viewModel = hiltViewModel(), {})
 }

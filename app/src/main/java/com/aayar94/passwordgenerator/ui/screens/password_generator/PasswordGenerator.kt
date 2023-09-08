@@ -144,6 +144,21 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
                 }
             }
         }
+        if (showDialog) {
+            Dialog(
+                onDismissRequest = {
+                    showDialog = false // Dismiss the custom AlertDialog
+                },
+                content = {
+                    PasswordSaveAlertDialog(
+                        passwordText = generatedPassword,
+                        viewModel,
+                        onDismissClicked = { showDialog = false }
+                    )
+                },
+                properties = DialogProperties(usePlatformDefaultWidth = false)
+            )
+        }
         Spacer(modifier = Modifier.height(10.dp))
         LabeledCheckbox(
             label = stringResource(id = R.string.upper_case), onCheckChange = {
@@ -177,22 +192,6 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
             if ((it.toString().isNotEmpty() && it.toInt() < 17) || it.toString().isEmpty()) {
                 passwordSize = it.toString()
             }
-        }
-        if (showDialog) {
-            var passwordTag: String = ""
-            Dialog(
-                onDismissRequest = {
-                    showDialog = false // Dismiss the custom AlertDialog
-                },
-                content = {
-                    PasswordSaveAlertDialog(
-                        passwordText = generatedPassword,
-                        viewModel,
-                        onDismissClicked = { showDialog = false }
-                    )
-                },
-                properties = DialogProperties(usePlatformDefaultWidth = false)
-            )
         }
         Spacer(modifier = Modifier.height(10.dp))
         ElevatedButton(
