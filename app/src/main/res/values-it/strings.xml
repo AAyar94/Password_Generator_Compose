@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Generatore di Password</string>
+    <string name="generate">Genera</string>
+    <string name="copy">Copia</string>
+    <string name="upper_case">Maiuscole</string>
+    <string name="lower_case">Minuscole</string>
+    <string name="numeric">Numeri</string>
+    <string name="click_on_generate">Clicca su Genera</string>
+    <string name="password_size">Dimensione Password</string>
+    <string name="generate_a_password">Genera una password sicura</string>
+    <string name="saved_password_list">Lista delle Password Salvate</string>
+    <string name="save_password">Salva Password</string>
+    <string name="saved_password_list_button">Pulsante Lista Password Salvate</string>
+    <string name="save_password_button">Pulsante Salva Password</string>
+    <string name="generate_button">Pulsante Genera</string>
+    <string name="selected_size_min_8_max_16">Dimensione selezionata: %1$s \n Minimo: 8, Massimo: 16</string>
+    <string name="delete_button">Pulsante Elimina</string>
+    <string name="save_a_password">Salva una password</string>
+    <string name="enter_a_password_tag">Inserisci un tag per la password</string>
+    <string name="password_tag">Tag Password</string>
+    <string name="cancel_button_icon">Icona Annulla</string>
+    <string name="save_button_icon">Icona Salva</string>
+    <string name="save">Salva</string>
+    <string name="cancel">Annulla</string>
+    <string name="password">Password</string>
+    <string name="saved_passwords">Password Salvate</string>
+    <string name="saved_password_list_empty_image">Immagine Lista Password Salvate vuota</string>
+    <string name="there_are_no_saved_password">Non ci sono password salvate</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Генератор паролей</string>
+    <string name="generate">Создать</string>
+    <string name="copy">Копировать</string>
+    <string name="upper_case">Заглавные буквы</string>
+    <string name="lower_case">Прописные буквы</string>
+    <string name="numeric">Цифры</string>
+    <string name="click_on_generate">Нажмите, чтобы создать</string>
+    <string name="password_size">Размер пароля</string>
+    <string name="generate_a_password">Создать надежный пароль</string>
+    <string name="saved_password_list">Список сохраненных паролей</string>
+    <string name="save_password">Сохранить пароль</string>
+    <string name="saved_password_list_button">Кнопка "Список сохраненных паролей"</string>
+    <string name="save_password_button">Кнопка "Сохранить пароль"</string>
+    <string name="generate_button">Кнопка "Создать"</string>
+    <string name="selected_size_min_8_max_16">Выбранный размер: %1$s \n Мин: 8, Макс: 16</string>
+    <string name="delete_button">Кнопка "Удалить"</string>
+    <string name="save_a_password">Сохранить пароль</string>
+    <string name="enter_a_password_tag">Введите метку пароля</string>
+    <string name="password_tag">Метка пароля</string>
+    <string name="cancel_button_icon">Иконка "Отменить"</string>
+    <string name="save_button_icon">Иконка "Сохранить"</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отменить</string>
+    <string name="password">Пароль</string>
+    <string name="saved_passwords">Сохраненные пароли</string>
+    <string name="saved_password_list_empty_image">Изображение пустого списка сохраненных паролей</string>
+    <string name="there_are_no_saved_password">Сохраненных паролей нет</string>
+</resources>

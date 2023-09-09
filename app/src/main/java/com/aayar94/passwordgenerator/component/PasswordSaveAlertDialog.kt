@@ -105,7 +105,7 @@ fun PasswordSaveAlertDialog(
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(0.7f)
+                        .fillMaxWidth(0.75f)
                         .padding(bottom = 12.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -121,7 +121,7 @@ fun PasswordSaveAlertDialog(
                                 contentDescription = stringResource(R.string.cancel_button_icon),
                                 tint = MaterialTheme.colorScheme.onError
                             )
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = stringResource(R.string.cancel),
                                 color = MaterialTheme.colorScheme.onError
@@ -144,7 +144,7 @@ fun PasswordSaveAlertDialog(
                                 contentDescription = stringResource(R.string.save_button_icon),
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = stringResource(R.string.save),
                                 color = MaterialTheme.colorScheme.onPrimary
@@ -159,6 +159,7 @@ fun PasswordSaveAlertDialog(
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview(locale = "tr")
 @Composable
 fun PasswordSaveAlertDialogPreview() {
     PasswordSaveAlertDialog("password", viewModel = hiltViewModel(), {})

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Generador de Contraseñas</string>
+    <string name="generate">Generar</string>
+    <string name="copy">Copiar</string>
+    <string name="upper_case">Mayúsculas</string>
+    <string name="lower_case">Minúsculas</string>
+    <string name="numeric">Números</string>
+    <string name="click_on_generate">Haga clic en Generar</string>
+    <string name="password_size">Tamaño de la Contraseña</string>
+    <string name="generate_a_password">Generar una contraseña segura</string>
+    <string name="saved_password_list">Lista de Contraseñas Guardadas</string>
+    <string name="save_password">Guardar Contraseña</string>
+    <string name="saved_password_list_button">Botón Lista de Contraseñas Guardadas</string>
+    <string name="save_password_button">Botón Guardar Contraseña</string>
+    <string name="generate_button">Botón Generar</string>
+    <string name="selected_size_min_8_max_16">Tamaño seleccionado: %1$s \n Mínimo: 8, Máximo: 16</string>
+    <string name="delete_button">Botón Eliminar</string>
+    <string name="save_a_password">Guardar una contraseña</string>
+    <string name="enter_a_password_tag">Ingrese una etiqueta de contraseña</string>
+    <string name="password_tag">Etiqueta de Contraseña</string>
+    <string name="cancel_button_icon">Icono Cancelar</string>
+    <string name="save_button_icon">Icono Guardar</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="password">Contraseña</string>
+    <string name="saved_passwords">Contraseñas Guardadas</string>
+    <string name="saved_password_list_empty_image">Imagen de Lista de Contraseñas Guardadas vacía</string>
+    <string name="there_are_no_saved_password">No hay contraseñas guardadas</string>
+</resources>

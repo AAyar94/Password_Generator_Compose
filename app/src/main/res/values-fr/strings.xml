@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Générateur de mot de passe</string>
+    <string name="generate">Générer</string>
+    <string name="copy">Copier</string>
+    <string name="upper_case">Majuscules</string>
+    <string name="lower_case">Minuscules</string>
+    <string name="numeric">Chiffres</string>
+    <string name="click_on_generate">Cliquez sur générer</string>
+    <string name="password_size">Taille du mot de passe</string>
+    <string name="generate_a_password">Générer un mot de passe fort</string>
+    <string name="saved_password_list">Liste des mots de passe enregistrés</string>
+    <string name="save_password">Enregistrer le mot de passe</string>
+    <string name="saved_password_list_button">Bouton Liste des mots de passe enregistrés</string>
+    <string name="save_password_button">Bouton Enregistrer le mot de passe</string>
+    <string name="generate_button">Bouton Générer</string>
+    <string name="selected_size_min_8_max_16">Taille sélectionnée : %1$s \n Min : 8, Max : 16</string>
+    <string name="delete_button">Bouton Supprimer</string>
+    <string name="save_a_password">Enregistrer un mot de passe</string>
+    <string name="enter_a_password_tag">Entrez une balise pour le mot de passe</string>
+    <string name="password_tag">Balise du mot de passe</string>
+    <string name="cancel_button_icon">Icône Annuler</string>
+    <string name="save_button_icon">Icône Enregistrer</string>
+    <string name="save">Enregistrer</string>
+    <string name="cancel">Annuler</string>
+    <string name="password">Mot de passe</string>
+    <string name="saved_passwords">Mots de passe enregistrés</string>
+    <string name="saved_password_list_empty_image">Image de la liste de mots de passe vide</string>
+    <string name="there_are_no_saved_password">Il n\'y a pas de mots de passe enregistrés</string>
+</resources>

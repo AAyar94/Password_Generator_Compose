@@ -27,10 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.component.RowLayoutSavedPassword
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
@@ -64,7 +66,7 @@ fun SavedPasswordsContent(
                 .padding(top = 24.dp)
         ) {
             Text(
-                text = "Saved Passwords",
+                text = stringResource(R.string.saved_passwords),
                 fontSize = 36.sp,
                 modifier = modifier
                     .align(CenterHorizontally)
@@ -81,7 +83,7 @@ fun SavedPasswordsContent(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Inbox,
-                            contentDescription = "Saved password list empty image",
+                            contentDescription = stringResource(R.string.saved_password_list_empty_image),
                             tint = MaterialTheme.colorScheme.error,
                             modifier = Modifier
                                 .height(100.dp)
@@ -89,7 +91,7 @@ fun SavedPasswordsContent(
                         )
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "There are no saved password",
+                            text = stringResource(R.string.there_are_no_saved_password),
                             color = MaterialTheme.colorScheme.error
                         )
                     }

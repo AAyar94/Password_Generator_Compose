@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Passwort Generator</string>
+    <string name="generate">Generieren</string>
+    <string name="copy">Kopieren</string>
+    <string name="upper_case">Großbuchstaben</string>
+    <string name="lower_case">Kleinbuchstaben</string>
+    <string name="numeric">Zahlen</string>
+    <string name="click_on_generate">Klicken Sie auf Generieren</string>
+    <string name="password_size">Passwortgröße</string>
+    <string name="generate_a_password">Starkes Passwort generieren</string>
+    <string name="saved_password_list">Gespeicherte Passwortliste</string>
+    <string name="save_password">Passwort speichern</string>
+    <string name="saved_password_list_button">Button Gespeicherte Passwortliste</string>
+    <string name="save_password_button">Button Passwort speichern</string>
+    <string name="generate_button">Button Generieren</string>
+    <string name="selected_size_min_8_max_16">Ausgewählte Größe: %1$s \n Min: 8, Max: 16</string>
+    <string name="delete_button">Button Löschen</string>
+    <string name="save_a_password">Passwort speichern</string>
+    <string name="enter_a_password_tag">Geben Sie eine Passwortkennung ein</string>
+    <string name="password_tag">Passwortkennung</string>
+    <string name="cancel_button_icon">Abbrechen-Schaltflächensymbol</string>
+    <string name="save_button_icon">Speichern-Schaltflächensymbol</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="password">Passwort</string>
+    <string name="saved_passwords">Gespeicherte Passwörter</string>
+    <string name="saved_password_list_empty_image">Bild für leere gespeicherte Passwortliste</string>
+    <string name="there_are_no_saved_password">Es sind keine gespeicherten Passwörter vorhanden</string>
+</resources>

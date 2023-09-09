@@ -13,7 +13,7 @@
     <string name="saved_password_list_button">Saved Password List Button</string>
     <string name="save_password_button">Save Password Button</string>
     <string name="generate_button">Generate Button</string>
-    <string name="selected_size_min_8_max_16">Selected Size : %1$s , Min : 8 , Max: 16</string>
+    <string name="selected_size_min_8_max_16">Selected Size : %1$s \n Min : 8 , Max: 16</string>
     <string name="delete_button">Delete Button</string>
     <string name="save_a_password">Save a password</string>
     <string name="enter_a_password_tag">Enter a password tag</string>
@@ -23,4 +23,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="password">Password</string>
+    <string name="saved_passwords">Saved Passwords</string>
+    <string name="saved_password_list_empty_image">Saved password list empty image</string>
+    <string name="there_are_no_saved_password">There are no saved password</string>
 </resources>
