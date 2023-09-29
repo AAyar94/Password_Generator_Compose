@@ -1,6 +1,7 @@
 package com.aayar94.passwordgenerator.ui.screens.saved_passwords
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,12 +37,16 @@ import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.component.RowLayoutSavedPassword
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
 import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun SavedPasswordsScreen(
     navController: NavController,
     viewModel: SavedPasswordsViewModel = hiltViewModel()
 ) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
+    systemUiController.statusBarDarkContentEnabled = !isSystemInDarkTheme()
     val passwordList by viewModel.passwordList.collectAsState()
     PasswordGeneratorTheme {
         SavedPasswordsContent(passwordList, Modifier, viewModel)

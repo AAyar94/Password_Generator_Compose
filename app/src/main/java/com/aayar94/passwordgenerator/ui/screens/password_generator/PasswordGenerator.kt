@@ -73,7 +73,10 @@ fun PasswordGeneratorScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGeneratorViewModel) {
+fun PasswordGeneratorUI(
+    navController: NavController,
+    viewModel: PasswordGeneratorViewModel
+) {
     var showDialog by remember { mutableStateOf(false) }
     var generatedPassword: String by remember { mutableStateOf("") }
     var passwordSize: String by remember { mutableStateOf("12") }
@@ -275,5 +278,5 @@ fun PasswordGeneratorUI(navController: NavController, viewModel: PasswordGenerat
 @Preview(uiMode = UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
 fun PasswordGeneratorPreview() {
-    PasswordGeneratorScreen(rememberNavController())
+    PasswordGeneratorUI(navController = rememberNavController(), viewModel = hiltViewModel())
 }
