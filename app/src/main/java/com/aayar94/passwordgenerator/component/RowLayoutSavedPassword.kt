@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
@@ -20,20 +22,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.aayar94.passwordgenerator.R
 import com.aayar94.passwordgenerator.model.db.SavedPasswordModel
+import com.aayar94.passwordgenerator.ui.theme.PasswordGeneratorTheme
 
 @Composable
 fun RowLayoutSavedPassword(
     password: SavedPasswordModel,
     deleteButtonOnClick: () -> Unit
 ) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,23 +45,33 @@ fun RowLayoutSavedPassword(
         Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
+                    .fillMaxWidth(0.8f)
                     .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .padding(8.dp),
+                    .padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(text = password.password.toString(), fontSize = 16.sp)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = password.tag.toString(), fontSize = 13.sp)
             }
-            IconButton(onClick = { deleteButtonOnClick() }) {
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(
+                onClick = { deleteButtonOnClick() },
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clip(
+                        CircleShape
+                    )
+                    .align(Alignment.CenterVertically)
+                    .padding(12.dp)
+            ) {
                 Icon(
                     modifier = Modifier
-                        .height(24.dp)
-                        .width(24.dp),
+                        .height(36.dp)
+                        .width(36.dp),
                     imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(R.string.delete_button),
-                    tint = Color.Red
+                    contentDescription = null,
+                    tint = Color.White
                 )
             }
         }
@@ -73,5 +84,7 @@ fun RowLayoutSavedPassword(
 @Composable
 fun SavedPasswordPreview() {
     val mockData = SavedPasswordModel(0, "asdfgh", "tag1")
-    RowLayoutSavedPassword(password = mockData) {   /* TODO */ }
+    PasswordGeneratorTheme {
+        RowLayoutSavedPassword(password = mockData) {   /* TODO */ }
+    }
 }
