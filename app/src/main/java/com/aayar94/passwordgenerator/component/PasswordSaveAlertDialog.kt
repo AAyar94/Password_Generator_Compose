@@ -40,6 +40,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -100,7 +102,10 @@ fun PasswordSaveAlertDialog(
                     modifier = Modifier.fillMaxWidth(0.8f),
                     placeholder = { Text(text = stringResource(R.string.enter_a_password_tag)) },
                     keyboardActions = KeyboardActions.Default,
-                    keyboardOptions = KeyboardOptions.Default, readOnly = false,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    ), readOnly = false,
                     label = { Text(text = stringResource(R.string.password_tag)) }
                 )
                 Spacer(modifier = Modifier.height(12.dp))
